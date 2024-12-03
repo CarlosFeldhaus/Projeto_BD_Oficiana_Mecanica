@@ -1,0 +1,113 @@
+-- Criando o Banco de Dados
+
+	CREATE DATABASE Oficina;
+
+	USE oficina;
+
+-- Criando as Tabelas:
+
+	CREATE TABLE Cliente_PF(
+		IdClinte_PF int auto_increment primary key,
+        Nome varchar (45),
+		CPF char (11) unique,
+        Telefone char (11),
+        Email varchar (45)
+        );
+        
+	CREATE TABLE Cliente_PJ(
+		IdClinte_PJ int auto_increment primary key,
+        Razao_Social varchar (45),
+        CNPJ char(14) unique,
+		Telefone char (11),
+        Email varchar (45)
+        );
+        
+	CREATE TABLE Veiculo_PF(
+		Veiculo_idVeiculo int,
+		Cliente_PF_idCliente_PF int
+        );
+    
+	CREATE TABLE Veiculo_PJ(
+		Veiculo_idVeiculo int,
+        Cliente_PJ_idCliente_PJ int
+        );
+    
+	CREATE TABLE Veiculo(
+		idVeiculo int auto_increment primary key,
+        Moedelo varchar (45),
+        Marca varchar (45),
+        Ano date,
+        Placa varchar (45),
+        Descricao varchar (45)
+        );
+        
+   	CREATE TABLE Mecanicos(
+		idMecanicos int auto_increment primary key,
+        Nome varchar (45),
+        CPF char(11) unique,
+        Telefone char(11),
+        Endereco varchar (45),
+        Especialidade varchar (45),
+        Avaliacao_idAvaliacao int,
+        Veiculo_idVeiculo int     
+    );
+    
+    CREATE TABLE Avaliacao(
+		idAvaliacao int auto_increment primary key,
+        Tipo_de_Servico varchar (45),
+        Pecas varchar (45),
+        Mao_de_Obra varchar (45),
+        Ordem_de_Servico_idOrdem_de_Servico int
+        );
+        
+	CREATE TABLE Tabela_de_Pecas(
+		Tabela_de_Peças_idPecas int,
+        Avaliacao_idAvaliacao int
+        );
+        
+	CREATE TABLE Tebela_de_Mao_de_Obra_has_Avaliacao(
+		Tebela_de_Mao_de_Obra_idTebela_de_Mao_de_Obra int auto_increment primary key,
+		Avaliacao_idAvaliacao int
+		);
+        
+	CREATE TABLE Tabela_de_Pecas(
+		idPecas int auto_increment primary key,
+		Codigo varchar (45),
+        Valor varchar (45),
+        Estoque  varchar (45)
+		);
+        
+	CREATE TABLE Tabela_de_Peças_has_Avaliacao(
+		Tabela_de_Pecas_idPecas int auto_increment primary key,
+		Avaliacao_idAvaliacao int
+		);
+        
+	CREATE TABLE Tebela_de_Mao_de_Obra(
+		Codigo varchar (45),
+        Valor varchar (45),
+        Tempo_estimado varchar(45)        
+        );
+        
+	CREATE TABLE Ordem_de_Servico (
+		idOrdem_de_Servico int auto_increment primary key,
+        Numero_da_Ordem float,
+        Tipo_de_Servico varchar(45),
+        Data_de_Emissao date,
+        Data_de_Conclusao date,
+        Valor float,
+        Mecanicos_Encaregados varchar(45)
+        );
+        
+	CREATE TABLE  Mecanicos_has_Ordem_de_Servico(
+		Mecanicos_idMecanicos int,
+        Mecanicos_Avaliacao_idAvaliacao int,
+        Mecanicos_Veiculo_idVeiculo int,
+		Ordem_de_Servico_idOrdem_de_Servico int
+        );
+        
+    CREATE TABLE Pagamento(
+		idPagamento int auto_increment primary key,
+        Tipo_de_Pagamento varchar(45),
+        Realizado boolean,
+        Ordem_de_Servico_idOrdem_de_Servico int
+        );
